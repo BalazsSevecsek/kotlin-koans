@@ -15,12 +15,12 @@ fun example2(list: List<Int>) {
 
 fun Customer.isFrom(city: City): Boolean {
     // Return true if the customer is from the given city
-    todoCollectionTask()
+    return  this.city.equals(city)
 }
 
 fun Shop.checkAllCustomersAreFrom(city: City): Boolean {
     // Return true if all customers are from the given city
-    todoCollectionTask()
+    return this.customers.filter { it.city.equals(city) }.size===this.customers.size
 }
 
 fun Shop.hasCustomerFrom(city: City): Boolean {
