@@ -28,19 +28,21 @@ operator fun DateRange.contains(other: MyDate): Boolean =
         this.start.compareTo(other)<=0 && this.endInclusive.compareTo(other)>=0
 
 class DateRange(val start: MyDate, val endInclusive: MyDate):Iterable<MyDate>{
-    var stx : MyDate = MyDate(start.year,start.month,start.dayOfMonth)
     override fun iterator(): Iterator<MyDate> {
-        return DateRangeIterator
+        return object : Iterator<MyDate>
+        {
+            var currentDate: MyDate = start
+            override fun next(): MyDate {
+                val resultDate :MyDate = currentDate
+                currentDate = currentDate.addTimeIntervals(TimeInterval.DAY,1)
+                return resultDate
+            }
+
+            override fun hasNext(): Boolean = currentDate <= endInclusive
+
+        }
     }
 
-    companion object DateRangeIterator: Iterator<MyDate>{
-        override fun next(): MyDate {
-            return MyDate(1990,7,6)
-        }
 
-        override fun hasNext(): Boolean {
-            return true
-        }
-    }
 }
 
