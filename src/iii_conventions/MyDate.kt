@@ -29,20 +29,29 @@ operator fun DateRange.contains(other: MyDate): Boolean =
 
 class DateRange(val start: MyDate, val endInclusive: MyDate):Iterable<MyDate>{
     override fun iterator(): Iterator<MyDate> {
-        return object : Iterator<MyDate>
-        {
-            var currentDate: MyDate = start
-            override fun next(): MyDate {
-                val resultDate :MyDate = currentDate
-                currentDate = currentDate.addTimeIntervals(TimeInterval.DAY,1)
-                return resultDate
-            }
-
-            override fun hasNext(): Boolean = currentDate <= endInclusive
-
-        }
+        return DateRangeIterator(this)
     }
-
-
 }
 
+class DateRangeIterator(val range: DateRange): Iterator<MyDate>
+{
+    var currentDate: MyDate = range.start
+    override fun next(): MyDate {
+        val resultDate :MyDate = currentDate
+        currentDate = currentDate.addTimeIntervals(TimeInterval.DAY,1)
+        return resultDate
+    }
+
+    override fun hasNext(): Boolean = currentDate <= range.endInclusive
+}
+
+operator fun MyDate.plus(other: TimeInterval) = addTimeIntervals(other,1)
+
+class RepeatedTimeInterval(val interval: TimeInterval, val number: Int)
+
+operator fun MyDate.plus(other: RepeatedTimeInterval)
+        = addTimeIntervals(other.interval,other.number)
+
+operator fun TimeInterval.times(other: Int):RepeatedTimeInterval{
+    return RepeatedTimeInterval(this,other)
+}
