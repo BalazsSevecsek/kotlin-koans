@@ -3,6 +3,7 @@ package iii_conventions
 import java.util.*
 
 data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int) : Comparable<MyDate>{
+
     override fun compareTo(other: MyDate): Int {
         return if(this.year==other.year)
                     if (this.month==other.month)
