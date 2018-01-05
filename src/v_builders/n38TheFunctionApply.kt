@@ -1,5 +1,7 @@
 package v_builders.examples
 
+import kotlin.reflect.KType
+
 fun todoTask38(): Nothing = TODO(
     """
         Task 38.
@@ -9,7 +11,8 @@ fun todoTask38(): Nothing = TODO(
 )
 
 fun <T> T.myApply(f: T.() -> Unit): T {
-    todoTask38()
+    f()
+    return this
 }
 
 fun buildString(): String {
