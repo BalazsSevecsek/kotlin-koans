@@ -34,7 +34,6 @@ fun renderProductTable(): String {
                 }
             }
             val products = getProducts()
-//            todoTask39()
             tr{
                 for ((index,product) in products.withIndex()) {
                     tr{
